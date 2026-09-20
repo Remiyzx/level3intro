@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Level 3 Intro - Remi Teacher</title>
+    <!-- IMPORT STANDARD SCHOOLBOOK PINYIN FONT (Andika) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Andika:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #F8FAFC;         /* Morandi Grey-Blue Slate-50 */
+            --primary-color: #1E3A8A;    /* Deep Navy Blue */
+            --primary-hover: #1D4ED8;    /* Active Blue */
+            --accent-color: #D97706;     /* Warm Amber Accent */
+            --card-bg: #FFFFFF;          /* Pure White Container */
+            --border-color: #E2E8F0;     /* Soft Border */
+            --text-main: #1E293B;        /* Dark Charcoal */
+            --text-sub: #64748B;         /* Medium Grey Translation */
+            --answer-blue: #2563EB;      /* Blue Highlight */
+            --correct-green: #15803D;    /* Green for Passed/Valid */
+            --error-red: #B91C1C;        /* Red for Warnings */
+            --pinyin-font: 'Andika', 'Century Gothic', sans-serif;
+        }
+
+        /* GLOBAL FONT SIZE BOOST FOR CLASSROOM PROJECTORS */
+        html { font-size: 18px; }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body { 
+            font-family: 'Helvetica Neue', Arial, sans-serif; 
+            background-color: var(--bg-color); 
+            color: var(--text-main); 
+            display: flex; 
+            flex-direction: column;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* TOP NAVIGATION BAR - FITS ALL TABS WITHOUT HORIZONTAL SCROLLING */
+        .top-navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: var(--primary-color);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .nav-header {
+            padding: 0.8rem 1.8rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255,255,255,0.12);
+        }
+        
+        .nav-header h1 { font-size: 1.3rem; margin: 0; }
+        .nav-header p { font-size: 0.95rem; color: #93C5FD; margin: 0; }
+        
+        .nav-tabs {
+            display: flex;
+            flex-wrap: wrap; /* Fit all menu items in view without horizontal scrolling */
+            justify-content: center;
+            gap: 6px;
+            padding: 0.6rem 0.8rem;
+        }
+        
+        .nav-tabs button {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: #E2E8F0;
+            padding: 0.45rem 0.8rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        
+        .nav-tabs button:hover {
+            background-color: rgba(255,255,255,0.25);
+            color: white;
+        }
+        
+        .nav-tabs button.active {
+            background-color: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+            font-weight: bold;
+        }
+
+        /* MAIN SLIDE STAGE */
+        .main-content { 
+            margin: 0 auto; 
+            flex-grow: 1; 
+            padding: 2rem 2.5rem; 
+            width: 100%;
+            max-width: 1250px; 
+        }
+
+        .tab-content { display: none; animation: fadeIn 0.3s ease-in-out; }
+        .tab-content.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .content-header { margin-bottom: 1.8rem; padding-bottom: 0.6rem; border-bottom: 3px solid var(--border-color); }
+        .content-header h2 { color: var(--primary-color); font-size: 2.1rem; }
+        .content-header p { color: var(--text-sub); font-size: 1.05rem; margin-top: 4px; }
+
+        /* CARDS */
+        .card { background-color: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.04); margin-bottom: 1.8rem; padding: 2rem; }
+        .card-title { font-size: 1.4rem; font-weight: bold; color: var(--primary-color); margin-bottom: 1.2rem; padding-bottom: 0.5rem; border-bottom: 2px dashed var(--border-color); display: flex; align-items: center; gap: 10px; }
+
+        .py-text { font-family: var(--pinyin-font) !important; }
+
+        /* ALERT & WARNING BOXES */
+        .alert-box {
+            padding: 1.2rem 1.5rem; border-radius: 8px; margin-bottom: 1.2rem;
+            border-left: 6px solid; font-size: 1.05rem;
+        }
+        .alert-warning { background-color: #FEF2F2; border-color: var(--error-red); color: #991B1B; }
+        .alert-info { background-color: #EFF6FF; border-color: var(--answer-blue); color: #1E40AF; }
+        .alert-success { background-color: #F0FDF4; border-color: var(--correct-green); color: #166534; }
+
+        /* AGENDA LIST */
+        .agenda-list { list-style: none; counter-reset: agenda-counter; }
+        .agenda-item {
+            counter-increment: agenda-counter;
+            display: flex; align-items: flex-start; gap: 15px;
+            padding: 1rem 1.4rem; background: #F8FAFC; border: 1px solid var(--border-color);
+            border-radius: 8px; margin-bottom: 0.8rem; transition: transform 0.2s ease;
+        }
+        .agenda-item:hover { transform: translateX(4px); background: #FFFFFF; }
+        .agenda-num {
+            background: var(--primary-color); color: white;
+            width: 36px; height: 32px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: bold; font-size: 1rem; flex-shrink: 0;
+        }
+        .agenda-text h4 { color: var(--primary-color); font-size: 1.15rem; margin-bottom: 2px; }
+        .agenda-text p { color: var(--text-sub); font-size: 1rem; }
+
+        /* GRID & TIMELINE TABLE */
+        .step-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; margin-top: 1rem; }
+        .step-card { background: #FAFAFA; border: 1px solid var(--border-color); border-radius: 10px; padding: 1.3rem; text-align: left; }
+        .step-card h4 { color: var(--primary-color); margin-bottom: 6px; font-size: 1.15rem; }
+
+        .schedule-table { width: 100%; border-collapse: collapse; margin-top: 0.8rem; font-size: 1.05rem; }
+        .schedule-table th, .schedule-table td { text-align: left; padding: 0.9rem 1rem; border-bottom: 1px solid var(--border-color); }
+        .schedule-table th { background-color: #F8FAFC; color: var(--primary-color); font-size: 1rem; text-transform: uppercase; }
+        .schedule-week { font-weight: bold; color: var(--accent-color); width: 22%; }
+        .schedule-tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.88rem; font-weight: bold; margin-left: 8px; }
+        .tag-online { background: #DBEAFE; color: #1E40AF; }
+        .tag-physical { background: #DCFCE7; color: #166534; }
+        .tag-special { background: #FEF3C7; color: #92400E; }
+
+        @media (max-width: 850px) {
+            .nav-header { flex-direction: column; align-items: flex-start; gap: 8px; padding: 1rem; }
+            .main-content { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP NAVIGATION BAR -->
+    <header class="top-navbar">
+        <div class="nav-header">
+            <h1>UN00302 Bahasa Mandarin Tahap III</h1>
+            <p>Course Orientation [1-2026/2027]</p>
+        </div>
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="openTab(event, 'tab-agenda')">📌 First Lesson Agenda</button>
+            <button class="tab-btn" onclick="openTab(event, 'tab-teacher')">👩‍🏫 Teacher Intro</button>
+            <button class="tab-btn" onclick="openTab(event, 'tab-prereq')">⚠️ Prerequisite Check</button>
+            <button class="tab-btn" onclick="openTab(event, 'tab-itel')">💻 ITEL Enrollment</button>
+            <button class="tab-btn" onclick="openTab(event, 'tab-wa')">💬 WhatsApp Group</button>
+            <button class="tab-btn" onclick="openTab(event, 'tab-schedule')">📅 Teaching Schedule</button>
+            <button class="tab-btn" onclick="openTab(event, 'tab-materials')">📚 Course Materials</button>
+            <button class="tab-btn" onclick="openTab(event, 'tab-name')">🪪 Chinese Name</button>
+            <button class="tab-btn" onclick="openTab(event, 'tab-start')">🚀 Start Lesson 9</button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="main-content">
+
+        <!-- TAB 1: AGENDA OVERVIEW -->
+        <section id="tab-agenda" class="tab-content active">
+            <div class="content-header">
+                <h2>First Lesson Agenda & Overview</h2>
+                <p>Welcome to Level 3 Mandarin! Here is our orientation roadmap for today.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-title">📋 First Lesson Orientation Roadmap</div>
+                <ul class="agenda-list">
+                    <li class="agenda-item">
+                        <div class="agenda-num">1</div>
+                        <div class="agenda-text">
+                            <h4>Teacher Introduction</h4>
+                            <p>Meet Remi老师, contact channels, and office hours.</p>
+                        </div>
+                    </li>
+                    <li class="agenda-item">
+                        <div class="agenda-num">2</div>
+                        <div class="agenda-text">
+                            <h4>Prerequisite Check</h4>
+                            <p>Ensure Level 2 is officially passed (Grades A+ down to D are allowed).</p>
+                        </div>
+                    </li>
+                    <li class="agenda-item">
+                        <div class="agenda-num">3</div>
+                        <div class="agenda-text">
+                            <h4>ITEL Course Enrollment & Briefing</h4>
+                            <p>Confirm course code UN00302 BAHASA MANDARIN TAHAP III [1-2026/2027].</p>
+                        </div>
+                    </li>
+                    <li class="agenda-item">
+                        <div class="agenda-num">4</div>
+                        <div class="agenda-text">
+                            <h4>Join WhatsApp Group Chat</h4>
+                            <p>Retrieve the official group link from ITEL Announcements.</p>
+                        </div>
+                    </li>
+                    <li class="agenda-item">
+                        <div class="agenda-num">5</div>
+                        <div class="agenda-text">
+                            <h4>Remi老师的教学时间安排(暂定)</h4>
+                            <p>Review the semester timeline, assessments, physical classes, and breaks.</p>
+                        </div>
+                    </li>
+                    <li class="agenda-item">
+                        <div class="agenda-num">6</div>
+                        <div class="agenda-text">
+                            <h4>Course Materials Overview</h4>
+                            <p>Information on obtaining your Level 3 Workbook and Mock Test paper.</p>
+                        </div>
+                    </li>
+                    <li class="agenda-item">
+                        <div class="agenda-num">7</div>
+                        <div class="agenda-text">
+                            <h4>Getting Your Custom Chinese Name</h4>
+                            <p>Submit your preferred short name to Remi老师 for customization.</p>
+                        </div>
+                    </li>
+                    <li class="agenda-item">
+                        <div class="agenda-num">8</div>
+                        <div class="agenda-text">
+                            <h4>Begin Lesson 9 (Tā jīnnián èrshí suì)</h4>
+                            <p>Transition directly into our first teaching topic!</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- TAB 2: TEACHER INTRO -->
+        <section id="tab-teacher" class="tab-content">
+            <div class="content-header">
+                <h2>Teacher Introduction</h2>
+                <p>Feel free to reach out to Remi老师 whenever you need guidance.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-title">👩‍🏫 Lecturer Profile</div>
+                <div class="step-grid">
+                    <div class="step-card">
+                        <h4>Instructor Name</h4>
+                        <p style="font-weight: bold; color: var(--primary-color); font-size: 1.2rem;">Yong Zi Xian</p>
+                        <p style="font-size: 0.95rem; color: #92400E; background: #FEF3C7; padding: 6px 10px; border-radius: 6px; margin-top: 8px;">
+                            💡 对你们来说应该比较难发音，所以你们也可以叫我 <strong>Remi老师</strong>。
+                        </p>
+                    </div>
+                    <div class="step-card">
+                        <h4>Course Title & Code</h4>
+                        <p style="font-weight: bold; color: var(--primary-color); font-size: 1.1rem;" class="py-text">UN00302 BAHASA MANDARIN TAHAP III [1-2026/2027]</p>
+                    </div>
+                    <div class="step-card" style="grid-column: span 2;">
+                        <h4>Consultation Channels</h4>
+                        <p style="font-size: 1.1rem; margin-top: 4px;"><strong>📱 WhatsApp:</strong> <span style="color: var(--answer-blue); font-weight: bold;">+60168045220</span></p>
+                        <p style="font-size: 1.1rem; margin-top: 4px;"><strong>📧 Email:</strong> <span style="color: var(--answer-blue); font-weight: bold;">zixian.yzx@ums.edu.my</span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: PREREQUISITE CHECK -->
+        <section id="tab-prereq" class="tab-content">
+            <div class="content-header">
+                <h2>Prerequisite Eligibility Check</h2>
+                <p>Please verify your academic qualification for Level 3 Mandarin.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-title">⚠️ Mandatory Qualification Standard</div>
+                
+                <div class="alert-box alert-warning">
+                    <h3 style="margin-bottom: 6px; font-size: 1.2rem;">Requirement: Level 2 Mandarin Result</h3>
+                    <p>To enroll in Level 3 (UN00302), you must have passed Level 2 Mandarin with an acceptable grade.</p>
+                </div>
+
+                <div class="step-grid" style="margin-top: 1.2rem;">
+                    <div class="step-card" style="border-left: 5px solid var(--correct-green);">
+                        <h4 style="color: var(--correct-green);">✔ ALLOWED GRADES</h4>
+                        <p style="font-size: 1.2rem; font-weight: bold; color: var(--correct-green); margin-top: 4px;">
+                            A+, A, A-, B+, B, B-, C+, C, C-, D
+                        </p>
+                        <p style="font-size: 0.95rem; color: var(--text-sub); margin-top: 6px;">You are fully eligible to continue taking Level 3!</p>
+                    </div>
+                    <div class="step-card" style="border-left: 5px solid var(--error-red);">
+                        <h4 style="color: var(--error-red);">✘ NOT ALLOWED GRADES</h4>
+                        <p style="font-size: 1.2rem; font-weight: bold; color: var(--error-red); margin-top: 4px;">
+                            E, F, or X
+                        </p>
+                        <p style="font-size: 0.95rem; color: var(--text-sub); margin-top: 6px;">You CANNOT take Level 3. Please drop this course and retake Level 2 immediately.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: ITEL ENROLLMENT -->
+        <section id="tab-itel" class="tab-content">
+            <div class="content-header">
+                <h2>ITEL Course Enrollment & Portal Overview</h2>
+                <p>Ensure you are registered under the official course page on our UMS ITEL portal.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-title">💻 Official ITEL Course Registration</div>
+                
+                <div class="alert-box alert-info">
+                    <h3 style="margin-bottom: 4px; font-size: 1.25rem;" class="py-text">UN00302 BAHASA MANDARIN TAHAP III [1-2026/2027]</h3>
+                    <p style="margin-top: 6px;">Please double-check your ITEL student portal to ensure this exact course title is listed on your active dashboard.</p>
+                </div>
+
+                <p style="font-size: 1.05rem; color: var(--text-main); margin-top: 1rem;">
+                    Remi老师 will guide everyone through the ITEL portal structure, assignment submissions, and resource tabs during class!
+                </p>
+            </div>
+        </section>
+
+        <!-- TAB 5: WHATSAPP GROUP -->
+        <section id="tab-wa" class="tab-content">
+            <div class="content-header">
+                <h2>Join Class WhatsApp Group Chat</h2>
+                <p>Our main communication channel for instant class updates, Q&A, and announcements.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-title">💬 How to Join the WhatsApp Group</div>
+                
+                <div class="alert-box alert-info">
+                    <ol style="margin-left: 1.2rem; margin-top: 4px; line-height: 1.8;">
+                        <li>Log in to your <strong>ITEL Portal</strong>.</li>
+                        <li>Open the page for <strong>UN00302 BAHASA MANDARIN TAHAP III [1-2026/2027]</strong>.</li>
+                        <li>Go to the <strong>Announcements / Course Information</strong> tab.</li>
+                        <li>Click the provided WhatsApp invite link to join our official class chat!</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 6: TEACHING SCHEDULE -->
+        <section id="tab-schedule" class="tab-content">
+            <div class="content-header">
+                <h2>Remi老师的教学时间安排(暂定)</h2>
+                <p>Tentative course schedule and assessment timeline for Semester 1 - 2026/2027.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-title">📅 Semester Schedule Roadmap</div>
+                
+                <table class="schedule-table">
+                    <thead>
+                        <tr>
+                            <th>Week</th>
+                            <th>Lesson Content / Activity</th>
+                            <th>Mode / Format</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="schedule-week">Week 1</td>
+                            <td>Lesson 9 Text 1</td>
+                            <td><span class="schedule-tag tag-online">Online</span></td>
+                        </tr>
+                        <tr>
+                            <td class="schedule-week">Week 2</td>
+                            <td>Lesson 9 Text 2</td>
+                            <td><span class="schedule-tag tag-online">Online</span></td>
+                        </tr>
+                        <tr>
+                            <td class="schedule-week">Week 3</td>
+                            <td>Lesson 10 Text 1</td>
+                            <td><span class="schedule-tag tag-physical">Physical</span></td>
+                        </tr>
+                        <tr>
+                            <td class="schedule-week">Week 4</td>
+                            <td>Lesson 10 Text 2</td>
+                            <td><span class="schedule-tag tag-physical">Physical</span></td>
+                        </tr>
+                        <tr style="background-color: #FEF2F2;">
+                            <td class="schedule-week">Week 5</td>
+                            <td>PTG (Pelaksanaan Tugas Guru / Self-Study)</td>
+                            <td><span class="schedule-tag tag-special">PTG</span></td>
+                        </tr>
+                        <tr>
+                            <td class="schedule-week">Week 6</td>
+                            <td>Lesson 11 Text 1</td>
+                            <td><span class="schedule-tag tag-physical">Physical</span></td>
+                        </tr>
+                        <tr>
+                            <td class="schedule-week">Week 7</td>
+                            <td>Lesson 11 Text 2</td>
+                            <td><span class="schedule-tag tag-physical">Physical</span></td>
+                        </tr>
+                        <tr style="background-color: #FEF3C7;">
+                            <td class="schedule-week">Mid-Sem Break</td>
+                            <td>Mid-Semester Recess / Break</td>
+                            <td><span class="schedule-tag tag-special">Break</span></td>
+                        </tr>
+                        <tr>
+                            <td class="schedule-week">Week 8</td>
+                            <td>Revision + <strong>Friday Night WCA 1</strong></td>
+                            <td><span class="schedule-tag tag-physical">Physical</span></td>
+                        </tr>
+                        <tr>
+                            <td class="schedule-week">Week 9</td>
+                            <td>Drama Grouping + Script Writing + Video Filming</td>
+                            <td><span class="schedule-tag tag-physical">Physical</span></td>
+                        </tr>
+                        <tr>
+                            <td class="schedule-week">Week 10</td>
+                            <td>Course Revision</td>
+                            <td><span class="schedule-tag tag-physical">Physical</span></td>
+                        </tr>
+                        <tr style="background-color: #FEF2F2;">
+                            <td class="schedule-week">Week 11</td>
+                            <td>PTG (Pelaksanaan Tugas Guru / Self-Study)</td>
+                            <td><span class="schedule-tag tag-special">PTG</span></td>
+                        </tr>
+                        <tr style="background-color: #EFF6FF;">
+                            <td class="schedule-week">Week 12</td>
+                            <td><strong>Listening Test + Oral Test</strong></td>
+                            <td><span class="schedule-tag tag-physical">Physical</span></td>
+                        </tr>
+                        <tr style="background-color: #FEF2F2;">
+                            <td class="schedule-week">Week 13</td>
+                            <td>PTG (Pelaksanaan Tugas Guru / Self-Study)</td>
+                            <td><span class="schedule-tag tag-special">PTG</span></td>
+                        </tr>
+                        <tr style="background-color: #FEF2F2;">
+                            <td class="schedule-week">Week 14</td>
+                            <td>PTG (Pelaksanaan Tugas Guru / Self-Study)</td>
+                            <td><span class="schedule-tag tag-special">PTG</span></td>
+                        </tr>
+                        <tr style="background-color: #FEF3C7;">
+                            <td class="schedule-week">Study Week</td>
+                            <td><strong>Monday Morning WCA 2</strong></td>
+                            <td><span class="schedule-tag tag-physical">Physical</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- TAB 7: COURSE MATERIALS -->
+        <section id="tab-materials" class="tab-content">
+            <div class="content-header">
+                <h2>Course Materials Overview</h2>
+                <p>Information regarding your Level 3 learning resources.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-title">📚 Level 3 Learning Materials</div>
+                
+                <div class="step-grid">
+                    <div class="step-card">
+                        <h4>1. Level 3 Course Workbook</h4>
+                        <p style="font-size: 1rem; color: var(--text-main);">
+                            Contains essential oral, reading, and writing practice drills for Lessons 9 through 12. Digital copies are uploaded on ITEL.
+                        </p>
+                    </div>
+                    <div class="step-card">
+                        <h4>2. Semester Mock Test Paper</h4>
+                        <p style="font-size: 1rem; color: var(--text-main);">
+                            Sample assessment test papers provided to help you prepare for mid-term and final examinations.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 8: CHINESE NAME -->
+        <section id="tab-name" class="tab-content">
+            <div class="content-header">
+                <h2>Getting Your Custom Chinese Name</h2>
+                <p>Used for official grading, class interaction, and custom feedback throughout the semester.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-title">🪪 Chinese Name Registration Guidelines</div>
+
+                <div class="alert-box alert-success" style="margin-bottom: 1.5rem;">
+                    <strong>Already have a Chinese name?</strong>
+                    <br>If you already have an established/official Chinese name from Level 1 or Level 2, you may skip this step and continue using your existing Chinese name!
+                </div>
+
+                <div style="background: #F8FAFC; border: 1px solid var(--border-color); padding: 1.4rem; border-radius: 10px;">
+                    <h4 style="color: var(--primary-color); margin-bottom: 8px; font-size: 1.15rem;">For students WITHOUT a Chinese name:</h4>
+                    <p style="margin-bottom: 10px; font-size: 1.05rem;">Please provide <strong>Remi老师</strong> with your preferred short name based on the following rules:</p>
+                    
+                    <ul style="list-style-type: square; margin-left: 1.5rem; color: var(--text-main); line-height: 1.8; font-size: 1.05rem;">
+                        <li>Must be <strong>easily recognizable</strong> from your official Full Name (as on your Matric Card).</li>
+                        <li>Ideally <strong>2 to 3 syllables long</strong> (e.g., <em>David</em> ➔ 大卫 Dàwéi; <em>Anna</em> ➔ 安娜 Ānnà; <em>Siti</em> ➔ 茜蒂 Xīdì).</li>
+                        <li>Remi老师 will phonetically transcribe and assign standard Chinese characters for you!</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 9: START LESSON 9 -->
+        <section id="tab-start" class="tab-content">
+            <div class="content-header">
+                <h2>Ready to Begin Lesson 9!</h2>
+                <p>Orientation complete. We are now ready to start our first topic.</p>
+            </div>
+
+            <div class="card" style="text-align: center; padding: 3.5rem 2rem;">
+                <h3 style="color: var(--primary-color); font-size: 2rem; margin-bottom: 10px;" class="py-text">Lesson 9: Tā jīnnián èrshí suì</h3>
+                <p style="color: var(--text-sub); font-size: 1.2rem; margin-bottom: 1rem;">Topic: Dates, Calendar, Age, Zodiac Animals & Birthday Celebrations</p>
+                <p style="font-size: 1.05rem; color: var(--accent-color); font-weight: bold;">(Please switch to the Lesson 9 Teaching Notes material now.)</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- TAB SWITCHING SCRIPT -->
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+
+            tablinks = document.getElementsByClassName("tab-btn");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+    </script>
+</body>
+</html>
