@@ -266,7 +266,7 @@
             font-size: 1.2rem;
         }
 
-        /* Schedule Table */
+        /* Schedule Table - UPDATED FOR NO WRAPPING */
         .schedule-table {
             width: 100%;
             border-collapse: collapse;
@@ -287,10 +287,26 @@
             text-transform: uppercase;
         }
 
+        /* 强制第一列（Week）不换行并自适应最佳宽度 */
         .schedule-week {
             font-weight: bold;
             color: var(--accent-orange);
-            width: 22%;
+            white-space: nowrap; 
+            width: 1%; 
+            padding-right: 30px !important;
+        }
+
+        /* 强制第二列（Content）占据剩余的所有空间 */
+        .schedule-table th:nth-child(2),
+        .schedule-table td:nth-child(2) {
+            width: auto;
+        }
+
+        /* 强制第三列（Mode/Format）不换行并保持紧凑 */
+        .schedule-table th:nth-child(3), 
+        .schedule-table td:nth-child(3) {
+            white-space: nowrap;
+            width: 1%;
         }
 
         .schedule-tag {
@@ -504,83 +520,83 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="schedule-week">Week 1</td>
+                        <td class="schedule-week">Week 1 (21 Sep 2026)</td>
                         <td>Lesson 9 text 1</td>
                         <td><span class="schedule-tag tag-online">online</span></td>
                     </tr>
                     <tr>
-                        <td class="schedule-week">Week 2</td>
+                        <td class="schedule-week">Week 2 (28 Sep 2026)</td>
                         <td>Lesson 9 text 2</td>
                         <td><span class="schedule-tag tag-online">online</span></td>
                     </tr>
                     <tr>
-                        <td class="schedule-week">Week 3</td>
+                        <td class="schedule-week">Week 3 (5 Oct 2026)</td>
                         <td>Lesson 10 text 1</td>
                         <td><span class="schedule-tag tag-physical">physical</span></td>
                     </tr>
                     <tr>
-                        <td class="schedule-week">Week 4</td>
+                        <td class="schedule-week">Week 4 (12 Oct 2026)</td>
                         <td>Lesson 10 text 2</td>
                         <td><span class="schedule-tag tag-physical">physical</span></td>
                     </tr>
                     <tr style="background-color: #fef2f2;">
-                        <td class="schedule-week">Week 5</td>
+                        <td class="schedule-week">Week 5 (19 Oct 2026)</td>
                         <td>PTG (Pembelajaran Teradun Gantian)</td>
                         <td><span class="schedule-tag tag-special">PTG</span></td>
                     </tr>
                     <tr>
-                        <td class="schedule-week">Week 6</td>
+                        <td class="schedule-week">Week 6 (26 Oct 2026)</td>
                         <td>Lesson 11 text 1</td>
                         <td><span class="schedule-tag tag-physical">physical</span></td>
                     </tr>
                     <tr>
-                        <td class="schedule-week">Week 7</td>
+                        <td class="schedule-week">Week 7 (2 Nov 2026)</td>
                         <td>Lesson 11 text 2</td>
                         <td><span class="schedule-tag tag-physical">physical</span></td>
                     </tr>
                     <tr style="background-color: #fef3c7;">
-                        <td class="schedule-week">Mid-Sem Break</td>
+                        <td class="schedule-week">Mid-Sem Break / Holiday (9 Nov 2026)</td>
                         <td>Mid-Semester Recess / Break</td>
                         <td><span class="schedule-tag tag-special">Break</span></td>
                     </tr>
                     <tr>
-                        <td class="schedule-week">Week 8</td>
-                        <td>Revision (physical) + Friday night WCA 1</td>
+                        <td class="schedule-week">Week 8 (16 Nov 2026)</td>
+                        <td>Revision (physical) + Friday night (20 Nov 2026) WCA 1</td>
                         <td><span class="schedule-tag tag-physical">physical</span></td>
                     </tr>
                     <tr>
-                        <td class="schedule-week">Week 9</td>
+                        <td class="schedule-week">Week 9 (23 Nov 2026)</td>
                         <td>Drama Grouping + Script Writing + Video Filming</td>
                         <td><span class="schedule-tag tag-physical">physical</span></td>
                     </tr>
                     <tr>
-                        <td class="schedule-week">Week 10</td>
+                        <td class="schedule-week">Week 10 (30 Nov 2026)</td>
                         <td>Revision</td>
                         <td><span class="schedule-tag tag-physical">physical</span></td>
                     </tr>
                     <tr style="background-color: #fef2f2;">
-                        <td class="schedule-week">Week 11</td>
+                        <td class="schedule-week">Week 11 (7 Dec 2026)</td>
                         <td>PTG (Pembelajaran Teradun Gantian)</td>
                         <td><span class="schedule-tag tag-special">PTG</span></td>
                     </tr>
                     <tr style="background-color: #eff6ff;">
-                        <td class="schedule-week">Week 12</td>
+                        <td class="schedule-week">Week 12 (14 Dec 2026)</td>
                         <td>Listening Test + Oral Test</td>
                         <td><span class="schedule-tag tag-physical">physical</span></td>
                     </tr>
                     <tr style="background-color: #fef2f2;">
-                        <td class="schedule-week">Week 13</td>
+                        <td class="schedule-week">Week 13 (21 Dec 2026)</td>
                         <td>PTG (Pembelajaran Teradun Gantian)</td>
                         <td><span class="schedule-tag tag-special">PTG</span></td>
                     </tr>
                     <tr style="background-color: #fef2f2;">
-                        <td class="schedule-week">Week 14</td>
+                        <td class="schedule-week">Week 14 (28 Dec 2026)</td>
                         <td>PTG (Pembelajaran Teradun Gantian)</td>
                         <td><span class="schedule-tag tag-special">PTG</span></td>
                     </tr>
                     <tr style="background-color: #fef3c7;">
-                        <td class="schedule-week">Study Week</td>
-                        <td>Monday morning WCA 2</td>
+                        <td class="schedule-week">Study Week (4 Jan 2027)</td>
+                        <td>Monday morning (4 Jan 2027) WCA 2</td>
                         <td><span class="schedule-tag tag-physical">physical</span></td>
                     </tr>
                 </tbody>
